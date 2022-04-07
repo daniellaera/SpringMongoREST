@@ -6,7 +6,6 @@ public class MovieCollectionException extends Exception {
         super(message);
     }
 
-
     public static String NotFoundException(String id) {
         return "Movie with " + id + "not found";
     }
