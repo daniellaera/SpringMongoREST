@@ -21,19 +21,19 @@ public class MovieController {
     public ResponseEntity<String> createMovie(@RequestBody Movie movie) {
         try {
             movieService.createMovie(movie);
-            return new ResponseEntity("Successfully added movie " + movie.getTitle(), HttpStatus.OK);
+            return new ResponseEntity<String>("Successfully added movie " + movie.getTitle(), HttpStatus.OK);
         } catch (ConstraintViolationException e) {
-            return new ResponseEntity(e.getMessage(), HttpStatus.UNPROCESSABLE_ENTITY);
+            return new ResponseEntity<String>(e.getMessage(), HttpStatus.UNPROCESSABLE_ENTITY);
         } catch (MovieCollectionException e) {
-            return new ResponseEntity(e.getMessage(), HttpStatus.CONFLICT);
+            return new ResponseEntity<String>(e.getMessage(), HttpStatus.CONFLICT);
         }
     }
 
 
     @RequestMapping(method = RequestMethod.GET, value = "/movie")
-    public ResponseEntity getAllMovies() {
+    public ResponseEntity<List<Movie>> getAllMovies() {
         List<Movie> movies = movieService.getAllMovies();
-        return new ResponseEntity(
+        return new ResponseEntity<List<Movie>>(
                 movies,
                 movies.size() > 0 ? HttpStatus.OK : HttpStatus.NOT_FOUND
         );
